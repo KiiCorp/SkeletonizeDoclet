@@ -4,7 +4,7 @@ package {{ class.packageName }};
  {{ class.comment }}
  */
 {%- endif %}
-public class {{ class.name }} {{ class.classGenerics }}{
+public class {{ class.name }} {{ class.classGenerics }} {{ class.extendsDeclaration }} {{ class.implementsDeclaration }} {
 {% for method in class.methods %}
     {%- if (method.methodComment.length > 0) %}
     /**

@@ -8,7 +8,7 @@ import java.util.Collection;
  * It's my class!
  * WEEEEI!
  */
-public class MyClass <T extends Number, U extends String, V> {
+public class MyClass <T extends Number, U extends String, V> extends Number implements Comparable<Number> {
     public String strProp;
     public final String strProp2 = "Default";
 
@@ -42,4 +42,29 @@ public class MyClass <T extends Number, U extends String, V> {
         }
     }
 
+    @Override
+    public int intValue() {
+        return 0;
+    }
+
+    @Override
+    public long longValue() {
+        return 0;
+    }
+
+    @Override
+    public float floatValue() {
+        return 0;
+    }
+
+    @Override
+    public double doubleValue() {
+        return 0;
+    }
+
+
+    @Override
+    public int compareTo(Number o) {
+        return 0;
+    }
 }

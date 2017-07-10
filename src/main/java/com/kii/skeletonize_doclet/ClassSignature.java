@@ -20,9 +20,9 @@ public class ClassSignature {
     /** Comment for the class */
     public String comment;
     /** Base  class */
-    public String baseClass;
+    public String extendsDeclaration;
     /** Interfaces */
-    public String interfaces;
+    public String implementsDeclaration;
     /** Methods */
     public List<MethodSignature> methods;
     /** Fields */

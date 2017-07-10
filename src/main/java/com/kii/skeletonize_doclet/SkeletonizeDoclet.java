@@ -19,6 +19,9 @@ public class SkeletonizeDoclet extends Standard {
             classSignature.classGenerics = typeVariables(cls.typeParameters());
             classSignature.packageName = cls.containingPackage().name();
             classSignature.comment = cls.getRawCommentText();
+            classSignature.extendsDeclaration = extendsDeclaration(cls);
+            classSignature.implementsDeclaration = implementsDeclaration(cls);
+
             for (MethodDoc md : cls.methods()) {
                 classSignature.methods.add(convertMethod(md));
             }
@@ -28,6 +31,29 @@ public class SkeletonizeDoclet extends Standard {
             ret.add(classSignature);
         }
         return ret;
+    }
+
+    public static String extendsDeclaration(ClassDoc classDoc) {
+        Type t = classDoc.superclassType();
+        String ret = "";
+        if (t.toString().length() > 0) {
+            ret = " extends " + t.toString();
+        }
+        return  ret;
+    }
+
+    public static String implementsDeclaration(ClassDoc classDoc) {
+        String ret = "";
+        boolean first = true;
+        for (Type t : classDoc.interfaceTypes()) {
+            if (first) {
+                ret += "implements ";
+            } else {
+                ret += ", ";
+            }
+            ret += t.toString();
+        }
+        return  ret;
     }
 
     public static String typeVariables(TypeVariable[] tvs) {
