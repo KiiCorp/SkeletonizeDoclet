@@ -1,18 +1,24 @@
 package {{ class.packageName }};
+{%- if (class.comment.length > 0) %}
 /**
  {{ class.comment }}
  */
+{%- endif %}
 public class {{ class.name }} {
 {% for method in class.methods %}
+    {%- if (method.methodComment.length > 0) %}
     /**
     {{ method.methodComment }}
     */
+    {%- endif %}
     {{ method.methodDeclaration }}
 {% endfor %}
 {% for field in class.fields %}
+    {%- if (field.fieldComment.length > 0) %}
     /**
     {{ field.fieldComment }}
     */
+    {%- endif %}
     public {{ field.fieldDeclaration }};
 {% endfor %}
 }
