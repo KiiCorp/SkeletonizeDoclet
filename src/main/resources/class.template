@@ -19,6 +19,6 @@ package {{ class.packageName }};
     {{ field.fieldComment }}
     */
     {%- endif %}
-    public {{ field.fieldDeclaration }};
+    {{ field.fieldDeclaration }};
 {% endfor %}
 }

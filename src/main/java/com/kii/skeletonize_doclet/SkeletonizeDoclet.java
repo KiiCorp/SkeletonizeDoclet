@@ -122,13 +122,14 @@ public class SkeletonizeDoclet extends Standard {
     }
 
     public static FieldSignature convertField(FieldDoc fieldDoc) {
+        String modifiers = fieldDoc.modifiers();
         String fieldName = fieldDoc.name();
         String type = fieldDoc.type().typeName();
         String value = fieldDoc.constantValueExpression();
 
-        String declaration = type + " " + fieldName;
+        String declaration = modifiers + " " + type + " " + fieldName;
         if (value != null && value.length() > 0) {
-            declaration = "final " + type + " " + fieldName + " = " + value;
+            declaration += " = " + value;
         }
         String comment = fieldDoc.commentText();
         return new FieldSignature(declaration, comment);
