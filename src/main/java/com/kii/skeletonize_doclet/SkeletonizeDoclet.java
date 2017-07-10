@@ -16,6 +16,7 @@ public class SkeletonizeDoclet extends Standard {
         for (ClassDoc cls :root.classes()) {
             ClassSignature classSignature = new ClassSignature();
             classSignature.name = cls.name();
+            classSignature.classGenerics = classGenerics(cls);
             classSignature.packageName = cls.containingPackage().name();
             classSignature.comment = cls.getRawCommentText();
             for (MethodDoc md : cls.methods()) {
@@ -27,6 +28,24 @@ public class SkeletonizeDoclet extends Standard {
             ret.add(classSignature);
         }
         return ret;
+    }
+
+    public static String classGenerics(ClassDoc classDoc) {
+        String ret = "";
+        boolean first = true;
+        for (TypeVariable tv : classDoc.typeParameters()) {
+            if (!first) {
+                ret += ", ";
+            }
+            String typeName = tv.typeName();
+            ret += typeName;
+            if (tv.bounds().length == 1) {
+                ret += " extends " + tv.bounds()[0].typeName();
+            }
+            first = false;
+        }
+        ret = "<" + ret + ">";
+        return  ret;
     }
 
     public static MethodSignature convertMethod(MethodDoc methodDoc) {

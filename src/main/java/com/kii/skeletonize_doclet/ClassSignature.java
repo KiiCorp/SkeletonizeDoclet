@@ -15,6 +15,8 @@ public class ClassSignature {
     public String packageName;
     /** Non qualified class name */
     public String name;
+    /** Generic types */
+    public String classGenerics;
     /** Comment for the class */
     public String comment;
     /** Base  class */
