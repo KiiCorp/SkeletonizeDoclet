@@ -1,0 +1,18 @@
+package {{ class.packageName }};
+/**
+ {{ class.comment }}
+ */
+public class {{ class.name }} {
+{% for method in class.methods %}
+    /**
+    {{ method.methodComment }}
+    */
+    {{ method.methodDeclaration }}
+{% endfor %}
+{% for field in class.fields %}
+    /**
+    {{ field.fieldComment }}
+    */
+    public {{ field.fieldDeclaration }};
+{% endfor %}
+}

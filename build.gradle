@@ -1,0 +1,44 @@
+group 'SkeletonizeDoclet'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile "org.jtwig:jtwig-core:5.85.3.RELEASE"
+    compile files("${System.properties['java.home']}/../lib/tools.jar")
+}
+
+task myTest {
+    // println project.configurations[''].files(externalDependency)
+    project.configurations['default'].allDependencies.each {
+        println project.configurations['default'].files(it)
+    }
+
+}
+
+
+task hoge {
+    //println sourceSets.main.runtimeClasspath.asPath
+    sourceSets.main.runtimeClasspath.each {
+        println it
+    }
+}
+
+task doclet(type: Javadoc, dependsOn: assemble) {
+    source = file("src/test/java/com/kii/skeletonize_doclet/test/MyClass.java")
+    options.locale = 'en_US'
+    options.docletpath = files("build/classes/main").asType(List)
+//    project.configurations['default'].allDependencies.each {
+//        options.docletpath += project.configurations['default'].files(it)
+//    }
+    sourceSets.main.runtimeClasspath.each {
+        options.docletpath += it
+    }
+    options.doclet = "com.kii.skeletonize_doclet.SkeletonizeDoclet"
+}
