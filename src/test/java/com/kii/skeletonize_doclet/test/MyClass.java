@@ -2,6 +2,8 @@ package com.kii.skeletonize_doclet.test;
 
 import com.sun.istack.internal.Nullable;
 
+import java.util.Collection;
+
 /**
  * It's my class!
  * WEEEEI!
@@ -33,4 +35,11 @@ public class MyClass <T extends Number, U extends String, V> {
     public T generic() {
         return null;
     }
+
+    public static <T> void fromArrayToCollection(T[] a, Collection<T> c) {
+        for (T o : a) {
+            c.add(o); // Correct
+        }
+    }
+
 }

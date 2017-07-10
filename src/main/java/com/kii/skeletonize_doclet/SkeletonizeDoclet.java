@@ -16,7 +16,7 @@ public class SkeletonizeDoclet extends Standard {
         for (ClassDoc cls :root.classes()) {
             ClassSignature classSignature = new ClassSignature();
             classSignature.name = cls.name();
-            classSignature.classGenerics = classGenerics(cls);
+            classSignature.classGenerics = typeVariables(cls.typeParameters());
             classSignature.packageName = cls.containingPackage().name();
             classSignature.comment = cls.getRawCommentText();
             for (MethodDoc md : cls.methods()) {
@@ -30,10 +30,10 @@ public class SkeletonizeDoclet extends Standard {
         return ret;
     }
 
-    public static String classGenerics(ClassDoc classDoc) {
+    public static String typeVariables(TypeVariable[] tvs) {
         String ret = "";
         boolean first = true;
-        for (TypeVariable tv : classDoc.typeParameters()) {
+        for (TypeVariable tv : tvs) {
             if (!first) {
                 ret += ", ";
             }
@@ -44,7 +44,9 @@ public class SkeletonizeDoclet extends Standard {
             }
             first = false;
         }
-        ret = "<" + ret + ">";
+        if (ret.length() > 0) {
+            ret = "<" + ret + ">";
+        }
         return  ret;
     }
 
@@ -52,17 +54,25 @@ public class SkeletonizeDoclet extends Standard {
         String returnType = methodDoc.returnType().typeName();
         String methodName = methodDoc.name();
         String modifier = methodDoc.modifiers();
+        String typeVars = typeVariables(methodDoc.typeParameters());
         String args = "";
         boolean first = true;
         for (Parameter p : methodDoc.parameters()) {
             if (!first) {
                 args += ", ";
             }
-            args += p.type().typeName();
+            ParameterizedType pt = p.type().asParameterizedType();
+            if (pt != null) {
+                args += pt.toString();
+            } else {
+                args += p.type().typeName();
+            }
+            args += p.type().dimension();
+
             args += " " + p.name();
             first = false;
         }
-        String declaration = modifier + " " + returnType + " " + methodName + " (" + args + ") " + methodBody(methodDoc);
+        String declaration = modifier + " " + typeVars + " " + returnType + " " + methodName + " (" + args + ") " + methodBody(methodDoc);
         String comment = methodDoc.commentText();
         return new MethodSignature(declaration, comment);
     }
