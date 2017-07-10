@@ -11,8 +11,10 @@ public class ClassSignature {
         this.innerClasses = new ArrayList<>();
     }
 
-    /** package name of the class **/
+    /** package name of the class */
     public String packageName;
+    /** class modifiers */
+    public String modifiers;
     /** Non qualified class name */
     public String name;
     /** Generic types */

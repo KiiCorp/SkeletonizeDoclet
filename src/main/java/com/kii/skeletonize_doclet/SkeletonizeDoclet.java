@@ -15,6 +15,7 @@ public class SkeletonizeDoclet extends Standard {
 
         for (ClassDoc cls :root.classes()) {
             ClassSignature classSignature = new ClassSignature();
+            classSignature.modifiers = cls.modifiers();
             classSignature.name = cls.name();
             classSignature.classGenerics = typeVariables(cls.typeParameters());
             classSignature.packageName = cls.containingPackage().name();

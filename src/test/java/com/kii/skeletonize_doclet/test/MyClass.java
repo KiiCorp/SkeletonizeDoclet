@@ -67,4 +67,9 @@ public class MyClass <T extends Number, U extends String, V> extends Number impl
     public int compareTo(Number o) {
         return 0;
     }
+
+    public static class MyInnerrClass {
+        public void myInner() {}
+    }
+
 }
