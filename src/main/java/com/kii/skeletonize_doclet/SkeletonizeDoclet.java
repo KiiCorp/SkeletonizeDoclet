@@ -24,10 +24,15 @@ public class SkeletonizeDoclet extends Standard {
             if (isInnerClass(classDoc)) {
                 continue;
             }
-            classDoc.position().file();
             Entity entity = Converter.convert(classDoc);
             String fileName = entity.getName() + ".java";
-            File file = new File(destDir, fileName);
+            String packageDir = packageDir(classDoc);
+            File dir = new File(destDir, packageDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            File file = new File(dir, fileName);
             try (FileOutputStream fos = new FileOutputStream(file))
             {
                 JavaFile javaFile = new JavaFile(entity);
@@ -47,5 +52,21 @@ public class SkeletonizeDoclet extends Standard {
         }
         return false;
     }
+
+    private static String packageDir(ClassDoc classDoc) {
+        String packageName = classDoc.containingPackage().name();
+        String[] spl = packageName.split("\\.");
+        String ret = "";
+        boolean first = true;
+        for (String s : spl) {
+            if (!first) {
+                ret += "/";
+            }
+            ret += s;
+            first = false;
+        }
+        return ret;
+    }
+
 }
 
