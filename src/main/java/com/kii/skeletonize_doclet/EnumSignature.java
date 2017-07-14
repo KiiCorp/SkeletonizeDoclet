@@ -7,37 +7,27 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassSignature implements Entity {
+public class EnumSignature implements Entity {
     // FIXME: Resolve resource path.
-    static final String TEMPLATE_PATH = "/Users/satoshi/git-wc/kiicloud/com.kii.skeletonize_doclet/build/resources/main/class.template";
-    public ClassSignature() {
-        this.methods = new ArrayList<>();
-        this.fields = new ArrayList<>();
-        this.innerClasses = new ArrayList<>();
-    }
-
-    /** High level classifier: class */
-    public static final String CLASSIFIER = "class";
-    /** package name of the class */
+    static final String TEMPLATE_PATH = "/Users/satoshi/git-wc/kiicloud/com.kii.skeletonize_doclet/build/resources/main/enum.template";
+    public static final String CLASSIFIER = "enum";
     public String packageName;
-    /** class modifiers */
     public String modifiers;
-    /** Non qualified class name */
     public String name;
-    /** Generic types */
-    public String classGenerics;
-    /** Comment for the class */
+    public String generics;
     public String comment;
-    /** Base  class */
-    public String extendsDeclaration;
-    /** Interfaces */
     public String implementsDeclaration;
-    /** Methods */
-    public List<MethodSignature> methods;
-    /** Fields */
     public List<FieldSignature> fields;
-    /** Inner classes */
+    public List<EnumFieldSignature> enumFields;
+    public List<MethodSignature> methods;
     public List<Entity> innerClasses;
+
+    public EnumSignature() {
+        fields = new ArrayList<>();
+        enumFields = new ArrayList<>();
+        methods = new ArrayList<>();
+        innerClasses = new ArrayList<>();
+    }
 
     @Override
     public String getClassifier() {
@@ -61,32 +51,49 @@ public class ClassSignature implements Entity {
 
     @Override
     public String getGenerics() {
-        return this.classGenerics;
+        return generics;
     }
 
     @Override
     public String getComment() {
-        return this.comment;
+        return comment;
     }
 
     @Override
     public String getImplementsDeclaration() {
-        return this.implementsDeclaration;
+        return implementsDeclaration;
     }
 
     @Override
     public String getExtendsDeclaration() {
-        return this.extendsDeclaration;
+        return "";
     }
 
     @Override
     public List<MethodSignature> getMethods() {
-        return this.methods;
+        return methods;
     }
 
     @Override
     public List<FieldSignature> getFields() {
-        return this.fields;
+        return fields;
+    }
+
+    public String enumDeclaration(String indent) {
+        String ret = "";
+        boolean first = true;
+        for (EnumFieldSignature e : enumFields) {
+            if (!first) {
+                ret += ", ";
+            }
+            ret += indent + e.fieldComment + "\n";
+            ret += indent + e.fieldDeclaration;
+            first = false;
+        }
+        if (ret.length() > 0) {
+            ret += ";";
+        }
+        return ret;
     }
 
     @Override
@@ -98,14 +105,14 @@ public class ClassSignature implements Entity {
         try (
                 ByteArrayOutputStream bas = new ByteArrayOutputStream();
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));
-            )
+        )
         {
             template.render(model, bas);
             String buffStr = bas.toString("utf-8");
             try (
                     StringReader sr = new StringReader(buffStr);
                     BufferedReader br = new BufferedReader(sr);
-                    ) {
+            ) {
                 String line = "";
                 boolean first = true;
                 while ((line = br.readLine()) != null) {
@@ -121,6 +128,7 @@ public class ClassSignature implements Entity {
         } catch (IOException e) {
             throw e;
         }
+
     }
 
     @Override

@@ -1,0 +1,15 @@
+{%- if (class.comment.length > 0) %}
+/**
+ {{ class.comment }}
+ */
+{%- endif %}
+{{ class.modifiers }} {{ class.classifier }} {{ class.name }} {{ class.classGenerics }} {{ class.extendsDeclaration }} {
+{% for method in class.methods %}
+    {%- if (method.methodComment.length > 0) %}
+    /**
+    {{ method.methodComment }}
+    */
+    {%- endif %}
+    {{ method.methodDeclaration }};
+{% endfor %}
+}

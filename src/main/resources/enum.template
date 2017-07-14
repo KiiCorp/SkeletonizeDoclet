@@ -3,7 +3,8 @@
  {{ class.comment }}
  */
 {%- endif %}
-{{ class.modifiers }} {{ class.classifier }} {{ class.name }} {{ class.classGenerics }} {{ class.extendsDeclaration }} {{ class.implementsDeclaration }} {
+{{ class.modifiers }} {{ class.classifier }} {{ class.name }} {{ class.implementsDeclaration }} {
+{{ class.enumDeclaration("    ") }}
 {% for method in class.methods %}
     {%- if (method.methodComment.length > 0) %}
     /**

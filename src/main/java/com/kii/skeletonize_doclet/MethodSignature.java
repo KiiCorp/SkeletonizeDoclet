@@ -1,10 +1,12 @@
 package com.kii.skeletonize_doclet;
 
 public class MethodSignature {
-    public MethodSignature(String methodDeclaration, String methodComment) {
+    public MethodSignature(String methodDeclaration, String methodComment, String methodBody) {
         this.methodDeclaration = methodDeclaration;
         this.methodComment = methodComment;
+        this.methodBody = methodBody;
     }
     String methodDeclaration;
     String methodComment;
+    String methodBody;
 }

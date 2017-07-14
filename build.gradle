@@ -14,29 +14,13 @@ dependencies {
     compile files("${System.properties['java.home']}/../lib/tools.jar")
 }
 
-task myTest {
-    // println project.configurations[''].files(externalDependency)
-    project.configurations['default'].allDependencies.each {
-        println project.configurations['default'].files(it)
-    }
-
-}
-
-
-task hoge {
-    //println sourceSets.main.runtimeClasspath.asPath
-    sourceSets.main.runtimeClasspath.each {
-        println it
-    }
-}
-
 task doclet(type: Javadoc, dependsOn: assemble) {
-    source = file("src/test/java/com/kii/skeletonize_doclet/test/MyClass.java")
+    source = fileTree('src/test/java/com/kii/skeletonize_doclet/test') {
+        include '**/*.java'
+    }
     options.locale = 'en_US'
     options.docletpath = files("build/classes/main").asType(List)
-//    project.configurations['default'].allDependencies.each {
-//        options.docletpath += project.configurations['default'].files(it)
-//    }
+
     sourceSets.main.runtimeClasspath.each {
         options.docletpath += it
     }

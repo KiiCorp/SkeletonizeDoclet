@@ -68,7 +68,7 @@ public class MyClass <T extends Number, U extends String, V> extends Number impl
         return 0;
     }
 
-    public static class MyInnerrClass {
+    public static class MyInnerClass {
         public void myInner() {}
     }
 
