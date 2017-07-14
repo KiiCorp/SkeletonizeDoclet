@@ -210,4 +210,18 @@ public class Converter {
         return new EnumFieldSignature(declaration, comment);
     }
 
+    public static String indentComment(String indent, String comment) {
+        String[] spl = comment.split("\\r?\\n");
+        String ret = "";
+        boolean first = true;
+        for (String s : spl) {
+            if (!first) {
+                ret += "\n";
+            }
+            ret += indent + s;
+            first = false;
+        }
+        return ret;
+    }
+
 }

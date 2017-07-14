@@ -7,4 +7,9 @@ public class FieldSignature {
     }
     String fieldDeclaration;
     String fieldComment;
+
+    public String getComment(String indent) {
+        return Converter.indentComment(indent, fieldComment);
+    }
+
 }

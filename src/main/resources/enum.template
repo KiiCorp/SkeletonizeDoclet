@@ -8,7 +8,7 @@
 {% for method in class.methods %}
     {%- if (method.methodComment.length > 0) %}
     /**
-    {{ method.methodComment }}
+{{ method.getComment("    ") }}
     */
     {%- endif %}
     {{ method.methodDeclaration }} {{ method.methodBody }}
@@ -16,7 +16,7 @@
 {% for field in class.fields %}
     {%- if (field.fieldComment.length > 0) %}
     /**
-    {{ field.fieldComment }}
+{{ field.getComment("    " }}
     */
     {%- endif %}
     {{ field.fieldDeclaration }};

@@ -9,4 +9,9 @@ public class MethodSignature {
     String methodDeclaration;
     String methodComment;
     String methodBody;
+
+    public String getComment(String indent) {
+        return Converter.indentComment(indent, methodComment);
+    }
+
 }
