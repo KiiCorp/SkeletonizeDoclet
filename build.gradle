@@ -18,6 +18,31 @@ task skeletonizeTest(type: Javadoc, dependsOn: assemble) {
     source = fileTree('src/test/java/com/kii/skeletonize_doclet/test') {
         include '**/*.java'
     }
+
+    // Example usage:
+//    source = files(){
+//        fileTree(dir:'/Users/satoshi/git-wc/kiicloud/AndroidStorageSDK/core-components/KiiCloudStorageSDK/src').matching {
+//            include 'com/kii/cloud/storage/**'
+//            include 'com/kii/cloud/abtesting/**'
+//            exclude 'com/kii/cloud/storage/engine/**'
+//            exclude 'com/kii/cloud/storage/utils/**'
+//            exclude 'com/kii/cloud/storage/KiiInternalUtil.java'
+//            exclude 'com/kii/cloud/storage/SDKClientInfo.java'
+//            exclude 'com/kii/cloud/storage/ConstantValues.java'
+//            exclude 'com/kii/cloud/storage/resumabletransfer/impl/**'
+//            exclude 'com/kii/cloud/storage/social/KiiBaseSocialConnect.java'
+//            include 'com/kii/cloud/analytics/**'
+//            exclude 'com/kii/cloud/analytics/ConstantValues.java'
+//            exclude 'com/kii/cloud/analytics/EventUploadService.java'
+//            exclude 'com/kii/cloud/analytics/impl/**'
+//            exclude 'com/kii/cloud/analytics/aggregationresult/ResultQueryUtil.java'
+//            exclude 'com/kii/cloud/analytics/aggregationresult/GroupedResultFactory.java'
+//            exclude 'com/kii/cloud/analytics/callback/KiiAnalyticsResultTask.java'
+//            exclude '**/_*.java'
+//            exclude '**/*.html'
+//        }
+//    }
+
     options.locale = 'en_US'
     options.docletpath = files("build/classes/main").asType(List)
 
