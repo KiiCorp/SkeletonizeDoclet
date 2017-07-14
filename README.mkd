@@ -1,0 +1,7 @@
+## Usage
+
+Execute javadoc command and specify doclet with your source codes.
+
+Preparign custom task in your build.gradle would be easier to use.
+
+[Example](https://github.com/KiiCorp/SkeletonizeDoclet/blob/master/build.gradle#L17)
