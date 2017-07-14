@@ -9,8 +9,6 @@ import java.io.OutputStream;
 
 public class JavaFile implements Renderer {
     public Entity entity;
-    // FIXME: Resolve resource path.
-    static final String TEMPLATE_PATH = "/Users/satoshi/git-wc/kiicloud/com.kii.skeletonize_doclet/build/resources/main/javafile.template";
 
     public JavaFile(Entity entity) {
         this.entity = entity;
@@ -18,7 +16,8 @@ public class JavaFile implements Renderer {
 
     @Override
     public void render(String indent, OutputStream out) throws IOException {
-        JtwigTemplate template = JtwigTemplate.fileTemplate(TEMPLATE_PATH);
+        String path = this.getClass().getResource("/javafile.template").getFile();
+        JtwigTemplate template = JtwigTemplate.fileTemplate(path);
         JtwigModel model = JtwigModel.newModel().with("class", entity);
         template.render(model, out);
     }

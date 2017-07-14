@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnumSignature implements Entity {
-    // FIXME: Resolve resource path.
-    static final String TEMPLATE_PATH = "/Users/satoshi/git-wc/kiicloud/com.kii.skeletonize_doclet/build/resources/main/enum.template";
+
     public static final String CLASSIFIER = "enum";
     public String packageName;
     public String modifiers;
@@ -99,7 +98,8 @@ public class EnumSignature implements Entity {
     @Override
     public void render(String indent, OutputStream out) throws IOException {
 
-        JtwigTemplate template = JtwigTemplate.fileTemplate(TEMPLATE_PATH);
+        String path = this.getClass().getResource("/enum.template").getFile();
+        JtwigTemplate template = JtwigTemplate.fileTemplate(path);
         JtwigModel model = JtwigModel.newModel().with("class", this);
 
         try (

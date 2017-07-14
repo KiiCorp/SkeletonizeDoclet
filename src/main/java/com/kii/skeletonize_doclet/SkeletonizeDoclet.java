@@ -24,6 +24,7 @@ public class SkeletonizeDoclet extends Standard {
             if (isInnerClass(classDoc)) {
                 continue;
             }
+            classDoc.position().file();
             Entity entity = Converter.convert(classDoc);
             String fileName = entity.getName() + ".java";
             File file = new File(destDir, fileName);

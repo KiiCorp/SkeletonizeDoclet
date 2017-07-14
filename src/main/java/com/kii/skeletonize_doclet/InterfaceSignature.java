@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InterfaceSignature implements Entity {
-    // FIXME: Resolve resource path.
-    static final String TEMPLATE_PATH = "/Users/satoshi/git-wc/kiicloud/com.kii.skeletonize_doclet/build/resources/main/interface.template";
+
     public static final String CLASSIFIER = "interface";
     public String packageName;
     public String modifiers;
@@ -78,7 +77,8 @@ public class InterfaceSignature implements Entity {
     @Override
     public void render(String indent, OutputStream out) throws IOException {
 
-        JtwigTemplate template = JtwigTemplate.fileTemplate(TEMPLATE_PATH);
+        String path = this.getClass().getResource("/interface.template").getFile();
+        JtwigTemplate template = JtwigTemplate.fileTemplate(path);
         JtwigModel model = JtwigModel.newModel().with("class", this);
 
         try (
