@@ -112,6 +112,7 @@ public class Converter {
         for (Type t : classDoc.interfaceTypes()) {
             if (first) {
                 ret += "implements ";
+                first = false;
             } else {
                 ret += ", ";
             }
