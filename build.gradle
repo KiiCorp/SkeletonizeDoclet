@@ -14,7 +14,7 @@ dependencies {
     compile files("${System.properties['java.home']}/../lib/tools.jar")
 }
 
-task doclet(type: Javadoc, dependsOn: assemble) {
+task skeletonizeTest(type: Javadoc, dependsOn: assemble) {
     source = fileTree('src/test/java/com/kii/skeletonize_doclet/test') {
         include '**/*.java'
     }
