@@ -16,7 +16,7 @@
 {% for field in class.fields %}
     {%- if (field.fieldComment.length > 0) %}
     /**
-{{ field.getComment("    " }}
+{{ field.getComment("    ") }}
     */
     {%- endif %}
     {{ field.fieldDeclaration }};
