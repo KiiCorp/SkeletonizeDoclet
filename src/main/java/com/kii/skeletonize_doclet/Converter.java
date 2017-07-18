@@ -161,6 +161,9 @@ public class Converter {
             if (!first) {
                 args += ", ";
             }
+            for (AnnotationDesc ad : p.annotations()) {
+                args += "@" + ad.annotationType().name() + " ";
+            }
             ParameterizedType pt = p.type().asParameterizedType();
             if (pt != null) {
                 args += pt.toString();
@@ -172,9 +175,18 @@ public class Converter {
             args += " " + p.name();
             first = false;
         }
+        String annotations = "";
+        first = true;
+        for (AnnotationDesc ad : methodDoc.annotations()) {
+            if (!first) {
+                annotations += " ";
+            }
+            annotations += "@" + ad.annotationType().name();
+            first = false;
+        }
         String declaration = modifier + " " + typeVars + " " + returnType + " " + methodName + " (" + args + ") ";
         String comment = methodDoc.commentText();
-        return new MethodSignature(declaration, comment, methodBody(methodDoc));
+        return new MethodSignature(declaration, comment, methodBody(methodDoc), annotations);
     }
 
     public static String methodBody(MethodDoc methodDoc) {

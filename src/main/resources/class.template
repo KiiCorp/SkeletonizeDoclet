@@ -10,6 +10,9 @@
 {{ method.getComment("    ") }}
     */
     {%- endif %}
+    {%- if (method.methodAnnotations.length > 0) %}
+    {{ method.methodAnnotations }}
+    {%- endif %}
     {{ method.methodDeclaration }} {{ method.methodBody }}
 {% endfor %}
 {% for field in class.fields %}
