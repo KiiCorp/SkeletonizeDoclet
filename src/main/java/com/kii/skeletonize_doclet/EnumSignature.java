@@ -85,9 +85,11 @@ public class EnumSignature implements Entity {
             if (!first) {
                 ret += ",\n";
             }
-            ret += indent + "/**\n";
-            ret += indent + e.fieldComment + "\n";
-            ret += indent + " */\n";
+            if (e.fieldComment != null && e.fieldComment.length()>0) {
+                ret += indent + "/**\n";
+                ret += indent + e.fieldComment + "\n";
+                ret += indent + " */\n";
+            }
             ret += indent + e.fieldDeclaration;
             first = false;
         }
