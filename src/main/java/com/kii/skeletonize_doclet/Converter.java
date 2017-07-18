@@ -33,6 +33,9 @@ public class Converter {
             enumSignature.methods.add(convertMethod(md));
         }
         for (FieldDoc fd : classDoc.fields()) {
+            if (isParcelableCreatorField(fd)) {
+                continue;
+            }
             enumSignature.fields.add(convertField(fd));
         }
         for (FieldDoc fd : classDoc.enumConstants()) {
@@ -58,6 +61,9 @@ public class Converter {
             interfaceSignature.methods.add(convertMethod(md));
         }
         for (FieldDoc fd : classDoc.fields()) {
+            if (isParcelableCreatorField(fd)) {
+                continue;
+            }
             interfaceSignature.fields.add(convertField(fd));
         }
         return interfaceSignature;
@@ -80,6 +86,9 @@ public class Converter {
             classSignature.methods.add(convertMethod(md));
         }
         for (FieldDoc fd : classDoc.fields()) {
+            if (isParcelableCreatorField(fd)) {
+                continue;
+            }
             classSignature.fields.add(convertField(fd));
         }
         return classSignature;
@@ -186,6 +195,16 @@ public class Converter {
             return "{}";
         }
         return "{ return null; }";
+    }
+
+    public static boolean isParcelableCreatorField(FieldDoc fieldDoc) {
+        String modifiers = fieldDoc.modifiers();
+        String fieldName = fieldDoc.name();
+
+        if (fieldName.equals("CREATOR") && modifiers.contains("static")) {
+            return true;
+        }
+        return false;
     }
 
     public static FieldSignature convertField(FieldDoc fieldDoc) {
