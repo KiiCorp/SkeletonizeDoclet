@@ -1,5 +1,5 @@
-package {{ class.packageName }};
+package {{ class.entity.packageName }};
 
 {{ class.imports }}
 
-{{ class.render("") }}
+{{ class.entity.render("") }}

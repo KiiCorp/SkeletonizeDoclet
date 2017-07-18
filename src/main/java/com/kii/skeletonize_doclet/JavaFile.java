@@ -21,7 +21,7 @@ public class JavaFile implements Renderer {
     public void render(String indent, OutputStream out) throws IOException {
         String path = this.getClass().getResource("/javafile.template").getFile();
         JtwigTemplate template = JtwigTemplate.fileTemplate(path);
-        JtwigModel model = JtwigModel.newModel().with("class", entity);
+        JtwigModel model = JtwigModel.newModel().with("class", this);
         template.render(model, out);
     }
 
