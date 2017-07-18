@@ -6,12 +6,15 @@ import org.jtwig.JtwigTemplate;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 public class JavaFile implements Renderer {
     public Entity entity;
+    public String imports;
 
-    public JavaFile(Entity entity) {
+    public JavaFile(Entity entity, String imports) {
         this.entity = entity;
+        this.imports = imports;
     }
 
     @Override

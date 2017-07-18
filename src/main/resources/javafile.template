@@ -1,3 +1,5 @@
 package {{ class.packageName }};
 
+{{ class.imports }}
+
 {{ class.render("") }}

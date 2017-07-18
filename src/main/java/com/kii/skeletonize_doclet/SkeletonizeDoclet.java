@@ -3,9 +3,11 @@ package com.kii.skeletonize_doclet;
 import com.sun.javadoc.*;
 import com.sun.tools.doclets.standard.Standard;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SkeletonizeDoclet extends Standard {
 
@@ -33,9 +35,11 @@ public class SkeletonizeDoclet extends Standard {
             }
 
             File file = new File(dir, fileName);
+
             try (FileOutputStream fos = new FileOutputStream(file))
             {
-                JavaFile javaFile = new JavaFile(entity);
+                String imports = getImports(classDoc);
+                JavaFile javaFile = new JavaFile(entity, imports);
                 javaFile.render("", fos);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -43,6 +47,31 @@ public class SkeletonizeDoclet extends Standard {
         }
 
         return true;
+    }
+
+    private static String getImports(ClassDoc classDoc) {
+        File source = classDoc.position().file();
+        String ret = "";
+        try (FileReader fr = new FileReader(source);
+             BufferedReader br = new BufferedReader(fr)
+        ) {
+            String line = null;
+            boolean first = true;
+            while ((line = br.readLine()) != null) {
+                Pattern p = Pattern.compile("^import [a-zA-Z._*]+;");
+                Matcher m = p.matcher(line);
+                if (m.matches()) {
+                    if (!first) {
+                        ret += "\n";
+                    }
+                    ret += line;
+                    first = false;
+                }
+            }
+            return ret;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static boolean isInnerClass(ClassDoc classDoc) {
