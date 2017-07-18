@@ -23,7 +23,7 @@ public class Converter {
         enumSignature.comment = classDoc.getRawCommentText();
         enumSignature.implementsDeclaration = implementsDeclaration(classDoc);
         for (ClassDoc inner : classDoc.innerClasses()) {
-            enumSignature.innerClasses.add(convertToClass(inner));
+            enumSignature.innerClasses.add(convert(inner));
         }
 
         for (MethodDoc md : classDoc.methods()) {
@@ -73,7 +73,7 @@ public class Converter {
         classSignature.extendsDeclaration = extendsDeclaration(classDoc);
         classSignature.implementsDeclaration = implementsDeclaration(classDoc);
         for (ClassDoc inner : classDoc.innerClasses()) {
-            classSignature.innerClasses.add(convertToClass(inner));
+            classSignature.innerClasses.add(convert(inner));
         }
 
         for (MethodDoc md : classDoc.methods()) {
