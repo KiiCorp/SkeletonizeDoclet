@@ -83,9 +83,11 @@ public class EnumSignature implements Entity {
         boolean first = true;
         for (EnumFieldSignature e : enumFields) {
             if (!first) {
-                ret += ", ";
+                ret += ",\n";
             }
+            ret += indent + "/**\n";
             ret += indent + e.fieldComment + "\n";
+            ret += indent + " */\n";
             ret += indent + e.fieldDeclaration;
             first = false;
         }
